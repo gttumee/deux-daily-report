@@ -13,6 +13,6 @@ class DailyReport extends Model
 
     public function tasks()
 {
-    return $this->hasMany(Task::class);
+    return $this->hasMany(Task::class,'report_id');
 }
 }

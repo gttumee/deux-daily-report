@@ -22,10 +22,11 @@ class DailyReportController extends Controller
             'user_id' => auth()->id(),
             'date' => $reportDate,
         ]);
-    
+
         // Taskを紐づけて保存
         foreach ($tasks as $task) {
             $report->tasks()->create([
+                // 'report_id'=>$report['id'],
                 'description' => $task['description'],
                 'start_time' => $task['start'],
                 'end_time' => $task['end'],
