@@ -15,6 +15,7 @@ Route::get('/', function () {
 
 Route::get('/report', [DailyReportController::class, 'create'])->middleware('auth');
 Route::post('/report', [DailyReportController::class, 'store'])->middleware('auth');
+Route::get('/detail-report', [DailyReportController::class, 'show'])->middleware('auth');
 
 Auth::routes();
 
