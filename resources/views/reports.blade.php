@@ -21,10 +21,6 @@
         .collapse-box {
             padding-top: 10px;
         }
-        .task-header a {
-    cursor: pointer;
-}
-
     </style>
 </head>
 <body class="p-3">
@@ -75,8 +71,30 @@
 
         <div class="collapse collapse-box" id="collapse-{{ $items->id }}">
             <div class="card card-body">
-                ユーザーID：{{ $items->id }}
-                <!-- タスク内容など表示 -->
+            <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">TASk</th>
+      <th scope="col">Start time</th>
+      <th scope="col">End time</th>
+      <th scope="col">Total time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"></th>
+      <td>09:00</td>
+      <td>18:00</td>
+      <td>8:00</td>
+    </tr>
+    <tr>
+    <th scope="row">Autocad stucter edit and changed</th>
+      <td>09:00</td>
+      <td>18:00</td>
+      <td>8:00</td>
+    </tr>
+  </tbody>
+</table>
             </div>
         </div>
     </div>
