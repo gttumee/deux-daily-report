@@ -15,6 +15,8 @@ class Task extends Model
     ];
     public function report()
 {
-    return $this->belongsTo(DailyReport::class);
+    return $this->belongsTo(DailyReport::class, 'report_id');
 }
+
+
 }

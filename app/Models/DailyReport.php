@@ -15,4 +15,9 @@ class DailyReport extends Model
 {
     return $this->hasMany(Task::class,'report_id');
 }
+
+public function user()
+{
+    return $this->belongsTo(User::class);
+}
 }

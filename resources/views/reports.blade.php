@@ -40,69 +40,73 @@
 
 <h3 class="mb-3">📅 Daily Detail</h3>
 
-<form method="POST" action="/report">
-    @csrf
+@php
+    $selectedDate = request('report_date');
+    if ($selectedDate && str_contains($selectedDate, '/')) {
+        $selectedDate = \Carbon\Carbon::createFromFormat('Y/m/d', $selectedDate)->format('Y-m-d');
+    }
+@endphp
+<form method="GET" action="/detail-report" id="search-form">
     <div class="mb-3">
         <label>Date</label>
-        <input type="date" name="report_date" value="{{ date('Y-m-d') }}" class="form-control" required>
+        <input type="date" name="report_date" id="date-input" value="{{ $selectedDate }}" class="form-control" required>
     </div>
-    @foreach($allUser as $items)
+</form>
+    @foreach ($dateReports as $report)
+
     <div class="task-box">
         <div class="task-header">
-            <!-- 👇 名前もクリック可能に -->
-            <a href="#collapse-{{ $items->id }}"
+            <a href="#collapse-{{ $report->user->id }}"
                data-toggle="collapse"
                role="button"
                aria-expanded="false"
-               aria-controls="collapse-{{ $items->id }}"
+               aria-controls="collapse-{{ $report->user->id }}"
                class="text-dark text-decoration-none fw-bold">
-                {{ $items->name }}
+               @php
+               $startTime = $report->tasks->min('start_time');
+               $endTime = $report->tasks->max('end_time');
+           @endphp
+               {{ $report->user->name }} {{ $startTime }} 〜{{ $endTime }}
             </a>
-
-            <!-- 👇 ボタンも引き続き collapse 対応 -->
             <button class="btn btn-sm btn-primary" type="button"
                     data-toggle="collapse"
-                    data-target="#collapse-{{ $items->id }}"
+                    data-target="#collapse-{{ $report->user->id }}"
                     aria-expanded="false"
-                    aria-controls="collapse-{{ $items->id }}">
+                    aria-controls="collapse-{{ $report->user->id }}">
                 Detail
             </button>
+  
         </div>
-
-        <div class="collapse collapse-box" id="collapse-{{ $items->id }}">
+        <div class="collapse collapse-box" id="collapse-{{ $report->user->id }}">
             <div class="card card-body">
             <table class="table table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">TASk</th>
-      <th scope="col">Start time</th>
-      <th scope="col">End time</th>
-      <th scope="col">Total time</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row"></th>
-      <td>09:00</td>
-      <td>18:00</td>
-      <td>8:00</td>
-    </tr>
-    <tr>
-    <th scope="row">Autocad stucter edit and changed</th>
-      <td>09:00</td>
-      <td>18:00</td>
-      <td>8:00</td>
-    </tr>
+                <thead>
+                    <tr>
+                        <th style="width: 70%;">Task</th>
+                        <th style="width: 10%;">Start time</th>
+                        <th style="width: 10%;">End time</th>
+                        <th style="width: 10%;">Total time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($report->tasks as $task)
+                    <tr>
+                        <th scope="row">{{ $task->description }}</th>
+                        <td>{{ $task->start_time }}</td>
+                        <td>{{ $task->end_time }}</td>
+                        <!-- Total time is always displayed as 00:00 -->
+                        <td>00:00</td>
+                    </tr>
+                    @endforeach
+                </tbody>                
   </tbody>
 </table>
             </div>
         </div>
     </div>
 @endforeach
-</form>
 </div>
 
-<!-- JSライブラリ -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -112,5 +116,11 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+        <script>
+            document.getElementById('date-input').addEventListener('change', function () {
+                document.getElementById('search-form').submit();
+            });
+        </script>
+        
 </body>
 </html>
