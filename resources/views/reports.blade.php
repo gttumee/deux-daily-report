@@ -75,31 +75,32 @@
                     aria-controls="collapse-{{ $report->user->id }}">
                 Detail
             </button>
-  
         </div>
         <div class="collapse collapse-box" id="collapse-{{ $report->user->id }}">
             <div class="card card-body">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th style="width: 70%;">Task</th>
-                        <th style="width: 10%;">Start time</th>
-                        <th style="width: 10%;">End time</th>
-                        <th style="width: 10%;">Total time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($report->tasks as $task)
-                    <tr>
-                        <th scope="row">{{ $task->description }}</th>
-                        <td>{{ $task->start_time }}</td>
-                        <td>{{ $task->end_time }}</td>
-                        <td>{{ $task->hours }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>                
-  </tbody>
-</table>
+            <div class="table-responsive">
+    <table class="table table-bordered table-sm" style="font-size: 0.875rem;"> <!-- 小さいフォント -->
+        <thead class="table-light">
+            <tr>
+                <th style="width: 70%;">Task</th>
+                <th style="width: 10%;">Start</th>
+                <th style="width: 10%;">End</th>
+                <th style="width: 10%;">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($report->tasks as $task)
+            <tr>
+                <th scope="row">{{ $task->description }}</th>
+                <td>{{ $task->start_time }}</td>
+                <td>{{ $task->end_time }}</td>
+                <td>{{ $task->hours }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
             </div>
         </div>
     </div>
