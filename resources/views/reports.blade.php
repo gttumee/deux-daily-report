@@ -80,16 +80,16 @@
     <table class="table table-bordered table-sm" style="font-size: 0.875rem;"> <!-- 小さいフォント -->
         <thead class="table-light">
             <tr>
-                <th style="width: 70%;">Task</th>
-                <th style="width: 10%;">Start</th>
-                <th style="width: 10%;">End</th>
-                <th style="width: 10%;">Total</th>
+                <th>Task</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Total</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($report->tasks as $task)
             <tr>
-                <th scope="row">{{ $task->description }}</th>
+                <td>{{ $task->description }}</td>
                 <td>{{ \Carbon\Carbon::parse($task->start_time)->format('H:i') }}</td>
                 <td>{{ \Carbon\Carbon::parse($task->end_time)->format('H:i') }}</td>
                 <td>{{ $task->hours }}</td>
