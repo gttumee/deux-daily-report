@@ -61,11 +61,11 @@
                             </div>
                             <div class="col-6 col-md-2">
                                 <input type="time" name="tasks[{{ $i }}][start]" class="form-control"
-                                       value="{{ $task->start_time }}" onchange="calcHours(this)" required>
+                                       value="{{ $task->start_time }}" onchange="calcHours(this)" placeholder="hh:mm" required>
                             </div>
                             <div class="col-6 col-md-2">
                                 <input type="time" name="tasks[{{ $i }}][end]" class="form-control"
-                                       value="{{ $task->end_time }}" onchange="calcHours(this)" required>
+                                       value="{{ $task->end_time }}" onchange="calcHours(this)" placeholder="hh:mm" required>
                             </div>
                             <div class="col-6 col-md-2">
                                 <input type="text" name="tasks[{{ $i }}][hours]" class="form-control"
@@ -84,10 +84,10 @@
                             <input type="text" name="tasks[0][description]" class="form-control" placeholder="Task" required>
                         </div>
                         <div class="col-6 col-md-2">
-                            <input type="time" name="tasks[0][start]" class="form-control" onchange="calcHours(this)" required>
+                            <input type="time" name="tasks[0][start]" class="form-control" onchange="calcHours(this)" placeholder="hh:mm" required>
                         </div>
                         <div class="col-6 col-md-2">
-                            <input type="time" name="tasks[0][end]" class="form-control" onchange="calcHours(this)" required>
+                            <input type="time" name="tasks[0][end]" class="form-control" onchange="calcHours(this)"  placeholder="hh:mm" required>
                         </div>
                         <div class="col-6 col-md-2">
                             <input type="text" name="tasks[0][hours]" class="form-control" placeholder="Total time" readonly>
@@ -116,10 +116,10 @@
                     <input type="text" name="tasks[${taskIndex}][description]" class="form-control" placeholder="Task" required>
                 </div>
                 <div class="col-6 col-md-2">
-                    <input type="time" name="tasks[${taskIndex}][start]" class="form-control" onchange="calcHours(this)" required>
+                    <input type="time" name="tasks[${taskIndex}][start]" class="form-control" onchange="calcHours(this)" placeholder="hh:mm" required>
                 </div>
                 <div class="col-6 col-md-2">
-                    <input type="time" name="tasks[${taskIndex}][end]" class="form-control" onchange="calcHours(this)" required>
+                    <input type="time" name="tasks[${taskIndex}][end]" class="form-control" onchange="calcHours(this)"  placeholder="hh:mm" required>
                 </div>
                 <div class="col-6 col-md-2">
                     <input type="text" name="tasks[${taskIndex}][hours]" class="form-control" placeholder="Total time" readonly>
