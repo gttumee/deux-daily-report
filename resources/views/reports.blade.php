@@ -61,9 +61,9 @@
                aria-controls="collapse-{{ $report->user->id }}"
                class="text-dark text-decoration-none fw-bold">
                @php
-               $startTime = $report->tasks->min('start_time');
-               $endTime = $report->tasks->max('end_time');
-           @endphp
+            $startTime = $report->tasks->min('start_time') ? \Carbon\Carbon::parse($report->tasks->min('start_time'))->format('H:i') : '';
+            $endTime = $report->tasks->max('end_time') ? \Carbon\Carbon::parse($report->tasks->max('end_time'))->format('H:i') : '';
+            @endphp
                {{ $report->user->name }} {{ $startTime }} 〜{{ $endTime }}
             </a>
             <button class="btn btn-sm btn-primary" type="button"
@@ -90,8 +90,8 @@
             @foreach ($report->tasks as $task)
             <tr>
                 <th scope="row">{{ $task->description }}</th>
-                <td>{{ $task->start_time }}</td>
-                <td>{{ $task->end_time }}</td>
+                <td>{{ \Carbon\Carbon::parse($task->start_time)->format('H:i') }}</td>
+                <td>{{ \Carbon\Carbon::parse($task->end_time)->format('H:i') }}</td>
                 <td>{{ $task->hours }}</td>
             </tr>
             @endforeach
