@@ -33,12 +33,12 @@
         </div>
         <form action="{{ route('logout') }}" method="POST">
             @csrf
-            <a href="{{route('report.form')}}"   class="btn btn-sm btn-outline-secondary">Daily Report Entry</a>
-            <button type="submit" class="btn btn-sm btn-outline-secondary">Logout</button>
+            <a href="{{route('report.form')}}"   class="btn btn-sm btn-outline-secondary">Daily report entry</a>
+            <button type="submit" class="btn btn-sm btn-outline-secondary">Log out</button>
         </form>
     </div>
 @endif
-<h3 class="mb-3">📅 View Daily Report</h3>
+<h3 class="mb-3">📅 View Report</h3>
 @php
     $selectedDate = request('report_date');
     if ($selectedDate && str_contains($selectedDate, '/')) {
