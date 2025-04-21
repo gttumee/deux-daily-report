@@ -48,7 +48,7 @@
 <form method="GET" action="/detail-report" id="search-form">
     <div class="mb-3">
         <label>Date</label>
-        <input type="date" name="report_date" id="date-input" value="{{ $selectedDate }}" class="form-control" required>
+        <input type="date" name="report_date" id="date-input"  value="{{ $requestDate ?? $today }}" class="form-control" required>
     </div>
 </form>
     @foreach ($dateReports as $report)

@@ -55,7 +55,7 @@ class DailyReportController extends Controller
 
     public function show(Request $request)
     {   
-        $requestDate = $request->report_date;
+        $requestDate = $request->input('report_date', Carbon::today()->format('Y-m-d'));
         if ($requestDate && str_contains($requestDate, '/')) {
             $requestDate = Carbon::createFromFormat('Y/m/d', $requestDate)->format('Y-m-d');
             }
