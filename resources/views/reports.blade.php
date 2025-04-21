@@ -37,9 +37,7 @@
         </form>
     </div>
 @endif
-
 <h3 class="mb-3">📅 Daily Detail</h3>
-
 @php
     $selectedDate = request('report_date');
     if ($selectedDate && str_contains($selectedDate, '/')) {
@@ -53,7 +51,6 @@
     </div>
 </form>
     @foreach ($dateReports as $report)
-
     <div class="task-box">
         <div class="task-header">
             <a href="#collapse-{{ $report->user->id }}"
@@ -100,13 +97,11 @@
         </tbody>
     </table>
 </div>
-
-            </div>
+      </div>
         </div>
     </div>
 @endforeach
 </div>
-
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -120,7 +115,6 @@
             document.getElementById('date-input').addEventListener('change', function () {
                 document.getElementById('search-form').submit();
             });
-        </script>
-        
+        </script> 
 </body>
 </html>
