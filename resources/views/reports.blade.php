@@ -94,8 +94,7 @@
                         <th scope="row">{{ $task->description }}</th>
                         <td>{{ $task->start_time }}</td>
                         <td>{{ $task->end_time }}</td>
-                        <!-- Total time is always displayed as 00:00 -->
-                        <td>00:00</td>
+                        <td>{{ $task->hours }}</td>
                     </tr>
                     @endforeach
                 </tbody>                
