@@ -28,7 +28,7 @@
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     @if (Auth::user()->role === 'admin')
-                    <a href="{{route('detail-report')}}"   class="btn btn-sm btn-outline-secondary">Check report</a>
+                    <a href="{{route('detail-report')}}"   class="btn btn-sm btn-outline-secondary">View Daily Reports</a>
                     @endif                    
                     <button type="submit" class="btn btn-sm btn-outline-secondary">logout</button>
                     </form>
