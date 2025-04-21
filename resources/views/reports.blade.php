@@ -75,9 +75,8 @@
             </button>
         </div>
         <div class="collapse collapse-box" id="collapse-{{ $report->user->id }}">
-            <div class="card card-body">
             <div class="table-responsive">
-    <table class="table table-bordered table-sm" style="font-size: 0.875rem;"> <!-- 小さいフォント -->
+            <table class="table table-bordered table-sm" style="font-size: 0.875rem;"> <!-- 小さいフォント -->
         <thead class="table-light">
             <tr>
                 <th>Task</th>
@@ -98,7 +97,6 @@
         </tbody>
     </table>
 </div>
-      </div>
         </div>
     </div>
 @endforeach
