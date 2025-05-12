@@ -33,6 +33,7 @@
         </div>
         <form action="{{ route('logout') }}" method="POST">
             @csrf
+            <a href="{{ route('report.form') }}" class="btn btn-sm btn-outline-secondary">Daily Report Entry</a>
             <button type="submit" class="btn btn-sm btn-outline-secondary">Logout</button>
         </form>
     </div>

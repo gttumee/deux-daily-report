@@ -25,6 +25,7 @@
                 <div>👤Hi {{ Auth::user()->name }}</div>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
+                    <a href="{{ route('detail-report') }}" class="btn btn-sm btn-outline-secondary">Daily Report Check</a>
                     <button type="submit" class="btn btn-sm btn-outline-secondary">Logout</button>
                 </form>
             </div>
