@@ -33,14 +33,12 @@
         </div>
         <form action="{{ route('logout') }}" method="POST">
             @csrf
-            <a href="{{ route('report.form') }}" class="btn btn-sm btn-outline-secondary">Daily Report Entry</a>
-            <button type="submit" class="btn btn-sm btn-outline-secondary">Logout</button>
+            <a href="{{route('report.form')}}"   class="btn btn-sm btn-outline-secondary">Daily report entry</a>
+            <button type="submit" class="btn btn-sm btn-outline-secondary">Log out</button>
         </form>
     </div>
 @endif
-
-<h3 class="mb-3">📅 Daily Detail</h3>
-
+<h3 class="mb-3">📅 View Report</h3>
 @php
     $selectedDate = request('report_date');
     if ($selectedDate && str_contains($selectedDate, '/')) {
@@ -50,11 +48,10 @@
 <form method="GET" action="/detail-report" id="search-form">
     <div class="mb-3">
         <label>Date</label>
-        <input type="date" name="report_date" id="date-input" value="{{ $selectedDate }}" class="form-control" required>
+        <input type="date" name="report_date" id="date-input"  value="{{ $requestDate ?? $today }}" class="form-control" required>
     </div>
 </form>
     @foreach ($dateReports as $report)
-
     <div class="task-box">
         <div class="task-header">
             <a href="#collapse-{{ $report->user->id }}"
@@ -64,9 +61,9 @@
                aria-controls="collapse-{{ $report->user->id }}"
                class="text-dark text-decoration-none fw-bold">
                @php
-               $startTime = $report->tasks->min('start_time');
-               $endTime = $report->tasks->max('end_time');
-           @endphp
+            $startTime = $report->tasks->min('start_time') ? \Carbon\Carbon::parse($report->tasks->min('start_time'))->format('H:i') : '';
+            $endTime = $report->tasks->max('end_time') ? \Carbon\Carbon::parse($report->tasks->max('end_time'))->format('H:i') : '';
+            @endphp
                {{ $report->user->name }} {{ $startTime }} 〜{{ $endTime }}
             </a>
             <button class="btn btn-sm btn-primary" type="button"
@@ -76,38 +73,34 @@
                     aria-controls="collapse-{{ $report->user->id }}">
                 Detail
             </button>
-  
         </div>
         <div class="collapse collapse-box" id="collapse-{{ $report->user->id }}">
-            <div class="card card-body">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th style="width: 70%;">Task</th>
-                        <th style="width: 10%;">Start time</th>
-                        <th style="width: 10%;">End time</th>
-                        <th style="width: 10%;">Total time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($report->tasks as $task)
-                    <tr>
-                        <th scope="row">{{ $task->description }}</th>
-                        <td>{{ $task->start_time }}</td>
-                        <td>{{ $task->end_time }}</td>
-                        <!-- Total time is always displayed as 00:00 -->
-                        <td>00:00</td>
-                    </tr>
-                    @endforeach
-                </tbody>                
-  </tbody>
-</table>
-            </div>
+            <div class="table-responsive">
+            <table class="table table-bordered table-sm" style="font-size: 0.875rem;"> <!-- 小さいフォント -->
+        <thead class="table-light">
+            <tr>
+                <th>Task</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($report->tasks as $task)
+            <tr>
+                <td>{{ $task->description }}</td>
+                <td>{{ \Carbon\Carbon::parse($task->start_time)->format('H:i') }}</td>
+                <td>{{ \Carbon\Carbon::parse($task->end_time)->format('H:i') }}</td>
+                <td>{{ $task->hours }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
         </div>
     </div>
 @endforeach
 </div>
-
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -121,7 +114,6 @@
             document.getElementById('date-input').addEventListener('change', function () {
                 document.getElementById('search-form').submit();
             });
-        </script>
-        
+        </script> 
 </body>
 </html>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\DailyReport;
-use App\Models\Task;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -19,28 +18,44 @@ class DailyReportController extends Controller
     {
         $reportDate = $request->input('report_date');
         $tasks = $request->input('tasks');
-    
-        $report = DailyReport::create([
+        $report = DailyReport::updateOrCreate([
             'user_id' => auth()->id(),
             'date' => $reportDate,
         ]);
-    
+
+        if (is_null($tasks)) {
+            $report->tasks()->delete();
+            return redirect()->back()->with('success', 'All tasks were deleted for this report.');
+        }
+        $taskIds = [];
         foreach ($tasks as $task) {
-            $report->tasks()->create([
+            $taskData = [
                 'description' => $task['description'],
                 'start_time' => $task['start'],
                 'end_time' => $task['end'],
                 'hours' => $task['hours'],
-            ]);
+            ];
+    
+            if (isset($task['id'])) {
+                $taskModel = $report->tasks()->where('id', $task['id'])->first();
+                if ($taskModel) {
+                    $taskModel->update($taskData);
+                    $taskIds[] = $taskModel->id;
+                }
+            } else {
+                $newTask = $report->tasks()->create($taskData);
+                $taskIds[] = $newTask->id;
+            }
         }
+    
+        $report->tasks()->whereNotIn('id', $taskIds)->delete();
     
         return redirect()->back()->with('success', 'Report submitted successfully!');
     }
 
     public function show(Request $request)
-    { 
-        
-        $requestDate = $request->report_date;
+    {   
+        $requestDate = $request->input('report_date', Carbon::today()->format('Y-m-d'));
         if ($requestDate && str_contains($requestDate, '/')) {
             $requestDate = Carbon::createFromFormat('Y/m/d', $requestDate)->format('Y-m-d');
             }
@@ -48,7 +63,8 @@ class DailyReportController extends Controller
                 ->whereDate('date', $requestDate)
                 ->get();
             $allUser = User::all();
-            return view('reports', compact('dateReports', 'allUser', 'requestDate'));
+            $today = Carbon::today()->format('Y-m-d');
+            return view('reports', compact('dateReports', 'allUser', 'requestDate','today'));
     }  
 
     public function showForm(Request $request)
